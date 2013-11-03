@@ -18,6 +18,6 @@ public class RedactorController {
 	
 	@RequestMapping(value = "/data", method = RequestMethod.GET)
 	public @ResponseBody Object data() {
-		return redactorService.getData();
+		return redactorService.data();
 	}
 }

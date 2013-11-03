@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.dybskiy.redactor.model.RedactorImage;
@@ -15,12 +16,13 @@ import com.googlecode.flickrjandroid.photos.PhotoList;
 import com.googlecode.flickrjandroid.photosets.Photoset;
 import com.googlecode.flickrjandroid.photosets.Photosets;
 import com.googlecode.flickrjandroid.photosets.PhotosetsInterface;
+import com.lollykids.biz.service.MailService;
 
 @Service
 public class RedactorService {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public Object getData() {
+	public Object data() {
 		Flickr f = new Flickr("02747b875273bddcaf425bb0394862b8");
 		PhotosetsInterface photosetsInterface = f.getPhotosetsInterface();
 		Photosets photosets;
@@ -47,5 +49,11 @@ public class RedactorService {
 			e.printStackTrace();
 		}
 		return images;
+	}
+
+	@Autowired private MailService  mailService;
+	
+	public void post() {
+		mailService.sendMail("future.fringe@gmail.com", "Test Subject", "<b>sdsds</b>");
 	}
 }
