@@ -24,6 +24,25 @@
 		$('#redactor_content').redactor({
 			imageGetJson : 'rest/data'
 		});
+		$('#emailForm').submit(function() { // set onsubmit event to the form
+			  var data = $('#email_form').serialize(); // serialize all the data in the form 
+			  alert('');
+// 			  $.ajax({
+// 			    url: 'testJson.php', // php script to retern json encoded string
+// 			    data: data,  // serialized data to send on server
+// 			    dataType:'json', // set recieving type - JSON in case of a question
+// 			    type:'POST', // set sending HTTP Request type
+// 			    async:false, 
+// 			    success: function(data) { // callback method for further manipulations             
+// 			      for (key in data.email) {
+// 			        alert(data.email[key]);
+// 			      }
+// 			    },
+// 			    error: function(data) { // if error occured
+// 			    }
+// 			  });
+			  return false;
+		});
 	});
 </script>
 </head>
@@ -49,7 +68,7 @@
 		</div>
 	</div>
 	<div class="container">
-		<form role="form" action="user/postAll" method="post">
+		<form role="form" action="user/postAll" method="post" id="emailForm">
 			<div class="starter-template">
 				<h1>전체 이메일 보내기</h1>
 				<p class="lead">나에게만 보내기 체크를 하면 prada040@naver.com으로 보내 집니다.</p>
