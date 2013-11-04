@@ -4,7 +4,6 @@ public class Mail {
 
 	private String subject;
 	private String content;
-	private boolean me;
 	
 	public Mail(String subject, String content) {
 		this.subject = subject;
@@ -22,13 +21,7 @@ public class Mail {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
-	public boolean isMe() {
-		return me;
+	public String toString() {
+		return "Mail [subject=" + subject + ", content=" + content +"]";
 	}
-	public void setMe(boolean me) {
-		this.me = me;
-	}
-	
-	
 }

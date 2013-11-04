@@ -14,6 +14,8 @@
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <link rel="stylesheet" href="redactor/redactor.css" />
 <script src="redactor/redactor.min.js"></script>
+<script src="lib/json2.js"></script>
+<script src="lib/util.js"></script>
 <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -25,11 +27,25 @@
 			imageGetJson : 'rest/data'
 		});
 		$('#emailForm').submit(function() { // set onsubmit event to the form
-			  var data = $('#emailForm').serialize(); // serialize all the data in the form 
-			  alert('');
+// 			$.post('rest/user/postAll', JSON.stringify($('#emailForm').serializeObject()), function(response) {
+// 				alert('');
+// 			}, 'json');
+		    $.ajax({
+		        url: 'rest/user/postAll',
+		        type: 'POST',
+		        data:  JSON.stringify($('#emailForm').serializeObject()),
+		        dataType: 'json',
+		        contentType: "text/json",
+		        success: function (data) {
+		            alert('data:'+data)
+		        },
+		        error: function (jqXHR, textStatus, errorThrown) {
+		            alert('jqXHR:'+jqXHR+'\n'+'textStatus:'+'\n'+textStatus+'errorThrown:'+errorThrown);
+		        }
+		    });		
 // 			  $.ajax({
-// 			    url: 'testJson.php', // php script to retern json encoded string
-// 			    data: data,  // serialized data to send on server
+// 			    url: 'rest/user/postAll', // php script to retern json encoded string
+// 			    data: JSON.stringify($('#emailForm').serializeObject()),  // serialized data to send on server
 // 			    dataType:'json', // set recieving type - JSON in case of a question
 // 			    type:'POST', // set sending HTTP Request type
 // 			    async:false, 
@@ -74,16 +90,13 @@
 				<p class="lead">나에게만 보내기 체크를 하면 prada040@naver.com으로 보내 집니다.</p>
 			</div>
 			<div class="form-group">
-				<label for="exampleInputEmail1">제목</label> <input type="email"
-					class="form-control" id="exampleInputEmail1" placeholder="제목을 넣으세요">
+				<label for="inputSubject">제목</label> <input type="text" class="form-control" id="subject" name="subject" placeholder="제목을 넣으세요">
 			</div>
 			<div class="checkbox">
-				<label> <input type="checkbox"> 나에게만 보내기
-				</label>
+				<label> <input type="checkbox" id="me" name="me"> 나에게만 보내기 </label>
 			</div>
 			<div id="page">
-				<textarea id="redactor_content" name="content">
-					</textarea>
+				<textarea id="redactor_content" name="content" id="content"></textarea>
 			</div>
 			<button type="submit" class="btn btn-default">전송</button>
 		</form>

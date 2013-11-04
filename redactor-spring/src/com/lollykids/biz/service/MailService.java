@@ -20,15 +20,16 @@ import com.lollykids.biz.model.User;
  */
 @Service
 public class MailService {
-    @Autowired private  JavaMailSender mailSender;
- 
-    /**
-     * @param to
-     * @param subject
-     * @param body
-     */
-    public void sendMail(final String to, String subject, String body) {
-    	 MimeMessage message = mailSender.createMimeMessage();
+	@Autowired
+	private JavaMailSender mailSender;
+
+	/**
+	 * @param to
+	 * @param subject
+	 * @param body
+	 */
+	public void sendMail(final String to, String subject, String body) {
+		MimeMessage message = mailSender.createMimeMessage();
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 			helper.setTo(to);
@@ -38,26 +39,24 @@ public class MailService {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-        mailSender.send(message);
-    }
+		mailSender.send(message);
+	}
 
 	public void sendMail(Mail mail, List<User> users) {
-   	 MimeMessage message = mailSender.createMimeMessage();
+		MimeMessage message = mailSender.createMimeMessage();
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 			helper.setSubject(mail.getSubject());
 			message.setContent(mail.getContent(), "text/html");
-
-		InternetAddress[] addressTo = new InternetAddress[users.size()];
-        for (int i = 0; i < users.size(); i++)
-        {
-        	String email = ((User)users.get(i)).getEmail();
-            addressTo[i] = new InternetAddress(email);
-        }
-        message.setRecipients(RecipientType.TO, addressTo); 
+			InternetAddress[] addressTo = new InternetAddress[users.size()];
+			for (int i = 0; i < users.size(); i++) {
+				String email = ((User) users.get(i)).getEmail();
+				addressTo[i] = new InternetAddress(email);
+			}
+			message.setRecipients(RecipientType.TO, addressTo);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-	       mailSender.send(message);	
+		mailSender.send(message);
 	}
 }
