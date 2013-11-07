@@ -2,13 +2,11 @@ package com.googlecode.flickrjandroid;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List; 
+import java.util.List;
 
 import org.json.JSONException;
 
 import com.github.dybskiy.redactor.model.RedactorImage;
-import com.googlecode.flickrjandroid.Flickr;
-import com.googlecode.flickrjandroid.FlickrException;
 import com.googlecode.flickrjandroid.photos.Photo;
 import com.googlecode.flickrjandroid.photos.PhotoList;
 import com.googlecode.flickrjandroid.photosets.Photoset;

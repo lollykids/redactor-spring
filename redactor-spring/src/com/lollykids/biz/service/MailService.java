@@ -20,8 +20,8 @@ import com.lollykids.biz.model.User;
  */
 @Service
 public class MailService {
-	@Autowired
-	private JavaMailSender mailSender;
+	
+	@Autowired private JavaMailSender mailSender;
 
 	/**
 	 * @param to
@@ -31,10 +31,11 @@ public class MailService {
 	public void sendMail(final String to, String subject, String body) {
 		MimeMessage message = mailSender.createMimeMessage();
 		try {
-			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+			MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
 			helper.setTo(to);
 			helper.setSubject(subject);
-			message.setContent(body, "text/html");
+			helper.setText(body, true);
+			//message.setContent(body, "text/html");
 			mailSender.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
@@ -42,6 +43,10 @@ public class MailService {
 		mailSender.send(message);
 	}
 
+	/**
+	 * @param mail
+	 * @param users
+	 */
 	public void sendMail(Mail mail, List<User> users) {
 		MimeMessage message = mailSender.createMimeMessage();
 		try {

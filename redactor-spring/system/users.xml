@@ -1,0 +1,7 @@
+<beanio xmlns="http://www.beanio.org/2012/03">
+  <stream name="users" format="csv">
+    <record name="user" class="com.lollykids.biz.model.User">
+		<field name="email" />
+    </record>
+  </stream>
+</beanio>
