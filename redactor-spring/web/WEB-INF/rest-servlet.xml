@@ -13,45 +13,31 @@
 	<context:component-scan base-package="com.lollykids.biz"/>
 	<context:component-scan base-package="com.github.dybskiy.redactor"/>
 	
-	<mvc:annotation-driven>
-	    <mvc:message-converters>
-	        <!-- @ResponseBody로 String 처리할때 한글처리 -->
-	        <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-	            <property name="supportedMediaTypes">
-	                <list>
-	                    <value>text/html;charset=UTF-8</value>
-	                </list>
-	            </property>
-	        </bean>
-	    </mvc:message-converters>
-	</mvc:annotation-driven>	
-	<bean  class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >
-   <property name="messageConverters">
-      <list>
-         <bean class = "org.springframework.http.converter.StringHttpMessageConverter">
-            <property name = "supportedMediaTypes">
-               <list>
-                  <value>text/plain;charset=UTF-8</value>
-               </list>
-            </property>
-         </bean>
-      </list>
-   </property>
-</bean>
+	<mvc:annotation-driven />
+	
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+		  	<list>
+		    	<value>c:/fringe/app.properties</value>
+		   	</list>
+	  	</property>
+	</bean>	
+	
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.gmail.com" />
-		<property name="port" value="587" />
-		<property name="username" value="ad.lollykids@gmail.com" />
-		<property name="password" value="asas1770" />
+		<property name="host" value="${mail.host}" />
+		<property name="port" value="${mail.port}" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
 		<property name="defaultEncoding" value="UTF-8"/> 
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.transport.protocol">smtp</prop>
 				<prop key="mail.smtp.auth">true</prop>
-<prop key="mail.mime.charset">UTF-8</prop>				
+				<prop key="mail.mime.charset">UTF-8</prop>				
 				<prop key="mail.smtp.starttls.enable">true</prop>
 				<prop key="mail.debug">true</prop>
 			</props>
 		</property>
 	</bean>
+	<import resource="classpath:applicationContext-beans.xml"/>
 </beans>
