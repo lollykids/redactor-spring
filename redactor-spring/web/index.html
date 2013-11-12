@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+	<title>fringe app</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="shortcut icon" href="docs-assets/ico/favicon.png">
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/starter-template.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<link rel="stylesheet" href="redactor/redactor.css" />
+	<script src="redactor/redactor.min.js"></script>
+	<script src="lib/json2.js"></script>
+	<script src="lib/util.js"></script>
+	<!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+	<!--[if lt IE 9]>
+	      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+	    <![endif]-->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#redactor_content').redactor({
+				imageGetJson : 'rest/data'
+			});
+			$('#emailForm').submit(function(){
+			    $.ajax({
+			    url: "rest/post", 
+			    type: 'POST',
+			    dataType: 'json',
+			    data:JSON.stringify($('#emailForm').serializeObject()),
+			    contentType: 'application/json; charset=UTF-8',
+			    success: function(data) {
+			    },
+			    error:function(data,status,er) { 
+			        alert("error: "+data+" status: "+status+" er:"+er);
+			    }		
+			    });
+				return false;
+			});
+		});
+	</script>
+	</head>
+	<body>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target=".navbar-collapse">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">fringe app</a>
+				</div>
+				<div class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#">Advertisement</a></li>
+	<!-- 					<li><a href="#ad">Ad</a></li> -->
+	<!-- 					<li><a href="#contact">Contact</a></li> -->
+					</ul>
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</div>
+		<div class="container">
+			<form role="form" action="rest/user/postAll" method="post" id="emailForm" >
+				<div class="starter-template">
+					<h1>전체 이메일 보내기</h1>
+					<p class="lead">나에게만 보내기 체크를 하면 나에게만 으로 보내 집니다.</p>
+				</div>
+				<div class="form-group">
+					<label for="inputSubject">제목</label> <input type="text" class="form-control" id="subject" name="subject" placeholder="제목을 넣으세요">
+				</div>
+				<div class="checkbox">
+					<label> <input type="checkbox" id="me" name="me"> 나에게만 보내기 </label>
+				</div>
+				<div id="page">
+					<textarea id="redactor_content" name="content" id="content" ></textarea>
+				</div>
+				<button type="submit" class="btn btn-default">전송</button>
+			</form>
+		</div>
+		<script src="lib/bootstrap.min.js"></script>
+	</body>
+</html>
